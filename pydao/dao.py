@@ -72,7 +72,6 @@ class Dao(object):
             for k, v in where.items()]
         wheres = ' and '.join(wheres)
         sql = 'select * from %s where %s' % (table, wheres)
-        print(sql)
         return self.db_query(sql)
 
     def update_object(self, obj, where, table):
@@ -83,7 +82,6 @@ class Dao(object):
             for k, v in where.items()]
         wheres = ' and '.join(wheres)
         sql = 'update %s set %s where %s' % (table, assigns, wheres)
-        print(sql)
         return self.db_change(sql)
 
     def delete_object(self, val, field, table):
@@ -101,7 +99,7 @@ class Dao(object):
     def is_exist(self, item, table):
         wheres = ['%s=%s' % (self._format_field(k), self._format_value(v))
             for k, v in item.items()]
-        wheres = ','.join(wheres)
+        wheres = ' and '.join(wheres)
         sql = 'select count(*) from %s where %s' % (table, wheres)
         result = self.db_query(sql)
         if result[0][0] > 0:
